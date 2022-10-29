@@ -1,0 +1,10 @@
+name:  linder_et_al_2022
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - snpeff
+  - snpsift
+
+
