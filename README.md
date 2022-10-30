@@ -1,6 +1,6 @@
 # Linder et al 2022
 
-This is a Nextflow pipeline for reproducing the analyses carried out in Linder et al, 2022. Code for the individual figures and tables is present in the `Figure_code` directory and are not yet a part of the nextflow pipeline. Code for recreating the data used in the figures and tables is present in the `bin` folder and has mostly been incorparated into the nextflow pipeline, except for analysis steps 14-19, which will be incorporated at a later time, but which can be used individually to call and find aneuploidies and SNVs present in the data. the `helper_functions.R` file contains functions used in multiple steps of the pipeline and are sourced as needed. The minimal files needed to run this analysis are present in the `assets` folder. However, the raw haplotype frequency file is too large to host on GitHub and a link will shortly be added that will enable one to download the file to run the pipeline.  
+This is a Nextflow pipeline for reproducing the analyses carried out in Linder et al, 2022. Code for the individual figures and tables is present in the `Figure_code` directory and are not yet a part of the nextflow pipeline. Code for recreating the data used in the figures and tables is present in the `bin` folder and has mostly been incorparated into the nextflow pipeline, except for analysis steps 14-19, which will be incorporated at a later time, but which can be used individually to call and find aneuploidies and SNVs present in the data. the `helper_functions.R` file contains functions used in multiple steps of the pipeline and are sourced as needed. The minimal files needed to run this analysis are present in the `assets` folder, with the exception of the raw haplotype frequency file which can be found [here](https://wfitch.bio.uci.edu/~tdlong/sandvox/publications.html) in the `Linder et al 2022` link. This can be downloaded and copied into the `assets` folder to run the pipeline.  
 
 
 [![homepage](https://img.shields.io/badge/nextflow-%E2%89%A522.10.1-brightgreen.svg)](https://nextflow.io/ "Redirect to nextflow homepage")
@@ -26,16 +26,20 @@ The Dockerfile and conda.yaml are included if updated or additional software too
 docker pull rlinder02/linder-et-al-2022:v1.1.0
 ```
 
-Run the pipeline on your local machine from GitHub:
+Clone the pipeline and then run on your local machine from GitHub:
 
 ```
-nextflow run rlinder02/linder-et-al-2022 -r main
+git clone https://github.com/tdlong/yeast_resource.git
+```
+
+```
+nextflow run main.nf
 ```
 
 To run the pipeline on AWS Batch, configure an AWS account to work with Nextflow as detailed [below](#pipeline-description) and then enter:
 
 ```
-nextflow run rlinder02/linder-et-al-2022 -r main -profile batch
+nextflow run main.nf -profile batch
 ```
 
 The nextflow.config file ensures that the Docker image is used by default for containerised execution, unless overriden at the command line.
