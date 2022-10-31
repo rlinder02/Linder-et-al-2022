@@ -29,7 +29,7 @@ docker pull rlinder02/linder-et-al-2022:v1.1.0
 Clone the pipeline and then run on your local machine from GitHub:
 
 ```
-git clone https://github.com/tdlong/yeast_resource.git
+git clone https://github.com/rlinder02/Linder-et-al-2022.git
 ```
 
 ```
