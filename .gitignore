@@ -9,6 +9,7 @@
 /work/*
 /large_asset/*
 .nextflow*
+/assets/Jan2022.allhaps.txt.gz
 
 ### Groovy ###
 # .gitignore created from Groovy contributors in https://github.com/apache/groovy/blob/master/.gitignore

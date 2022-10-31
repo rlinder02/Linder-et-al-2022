@@ -51,6 +51,8 @@ include {TOP_23_HAPS} from './modules/top_23_haps/main'
 include {CORRELATION_PREP} from './modules/correlations/main'
 include {CORRELATION_CALC} from './modules/calculating_correlations/main'
 include {CORRELATIONS_COMBINE} from './modules/combine_correlations/main'
+include {ANEUPLOIDIES} from './modules/finding_aneuploidies/main'
+include {ANEUPLOIDY_TABLE} from './modules/aneuploidy_table/main'
 
 /* 
 * main script flow
@@ -82,6 +84,8 @@ workflow {
     split_ch = CORRELATION_PREP.out[0].splitCsv( header: false, sep: '\t' ).map { row -> row }
     CORRELATION_CALC(split_ch, CORRELATION_PREP.out[1].first(), CORRELATION_PREP.out[2].first())
     CORRELATIONS_COMBINE(CORRELATION_CALC.out.collect())
+    ANEUPLOIDIES(COVERAGE.out[2], low_cov, params.offsets, params.helper)
+    ANEUPLOIDY_TABLE(ANEUPLOIDIES.out[2].collect(), reps_using, treatments, treatment_key, low_cov, params.helper, params.offsets)
 }
 
 /* 
