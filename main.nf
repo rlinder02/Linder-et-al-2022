@@ -23,6 +23,9 @@ params.offsets = "$projectDir/assets/newoffsets.txt"
 params.repeats = "$projectDir/assets/repeatpos2.txt"
 params.helper = "$projectDir/assets/helper_functions.R"
 params.metadata = "$projectDir/assets/sexual_paper_sample_metadata_revised.txt"
+params.old_muts = "$projectDir/assets/MUT.asexual.txt"
+params.new_muts = "$projectDir/assets/MUT.sexual.April23.vcf"
+params.gff = "$projectDir/assets/saccharomyces_cerevisiae_R64-2-1_20150113.gff"
 params.outdir = "$projectDir/results"
 
 // log.info """\
@@ -53,6 +56,12 @@ include {CORRELATION_CALC} from './modules/calculating_correlations/main'
 include {CORRELATIONS_COMBINE} from './modules/combine_correlations/main'
 include {ANEUPLOIDIES} from './modules/finding_aneuploidies/main'
 include {ANEUPLOIDY_TABLE} from './modules/aneuploidy_table/main'
+include {MUT_PREPROCESS} from './modules/mutation_preprocessing/main'
+include {MUT_ANNOTATE} from './modules/mutation_annotation/main'
+include {MUT_FURTHER_ANNOTATE} from './modules/mutation_further_annotations/main'
+include {MUT_GO} from './modules/mutation_GO_annotations/main'
+include {MUT_TABLE} from './modules/mutation_creating_table/main'
+
 
 /* 
 * main script flow
@@ -86,6 +95,11 @@ workflow {
     CORRELATIONS_COMBINE(CORRELATION_CALC.out.collect())
     ANEUPLOIDIES(COVERAGE.out[2], low_cov, params.offsets, params.helper)
     ANEUPLOIDY_TABLE(ANEUPLOIDIES.out[2].collect(), reps_using, treatments, treatment_key, low_cov, params.helper, params.offsets)
+    MUT_PREPROCESS(params.old_muts, params.new_muts, params.offsets, params.helper)
+    MUT_ANNOTATE(MUT_PREPROCESS.out)
+    MUT_FURTHER_ANNOTATE(MUT_ANNOTATE.out.collect(), params.gff, params.helper, params.old_muts, params.new_muts, params.offsets)
+    MUT_GO(MUT_FURTHER_ANNOTATE.out, params.helper)
+    MUT_TABLE(MUT_GO.out, params.helper, treatments, treatment_key, low_cov, reps_using)
 }
 
 /* 

@@ -1,6 +1,6 @@
 # Linder et al 2022
 
-This is a Nextflow pipeline for reproducing the analyses carried out in Linder et al, 2022. Code for the individual figures and tables is present in the `Figure_code` directory and are not yet a part of the nextflow pipeline. Code for recreating the data used in the figures and tables is present in the `bin` folder and has mostly been incorparated into the nextflow pipeline, except for analysis steps 15-16, which will be incorporated at a later time, but which can be used individually to call and find SNVs present in the data. the `helper_functions.R` file contains functions used in multiple steps of the pipeline and are sourced as needed. The minimal files needed to run this analysis are present in the `assets` folder, with the exception of the raw haplotype frequency file which can be found [here](https://wfitch.bio.uci.edu/~tdlong/sandvox/publications.html) in the `Linder et al 2022` link. This can be downloaded and copied into the `assets` folder to run the pipeline.  
+This is a Nextflow pipeline for reproducing the analyses carried out in Linder et al, 2022. Code for the individual figures and tables is present in the `Figure_code` directory and are not yet a part of the nextflow pipeline. Code for recreating the data used in the figures and tables is present in the `bin` folder. The `helper_functions.R` file contains functions used in multiple steps of the pipeline and are sourced as needed. The minimal files needed to run this analysis are present in the `assets` folder, with the exception of the raw haplotype frequency file which can be found [here](https://wfitch.bio.uci.edu/~tdlong/sandvox/publications.html) in the `Linder et al 2022` link. This can be downloaded and copied into the `assets` folder to run the pipeline.  
 
 
 [![homepage](https://img.shields.io/badge/nextflow-%E2%89%A522.10.1-brightgreen.svg)](https://nextflow.io/ "Redirect to nextflow homepage")
@@ -24,6 +24,11 @@ The Dockerfile and conda.yaml are included if updated or additional software too
 
 ```
 docker pull rlinder02/linder-et-al-2022:v1.1.0
+```
+An additional docker image from quay.io is also used for finding SNVs that potentially impact transcription factor binding sites that can be retrieved using this command:
+
+```
+docker pull quay.io/biocontainers/bioconductor-motifbreakr:2.12.0--r42hdfd78af_0
 ```
 
 Clone the pipeline and then run on your local machine from GitHub:
